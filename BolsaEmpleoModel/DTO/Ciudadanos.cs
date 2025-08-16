@@ -1,4 +1,4 @@
-﻿namespace BolsaEmpleoModel
+﻿namespace BolsaEmpleoModel.DTO
 {
     public class Ciudadanos
     {

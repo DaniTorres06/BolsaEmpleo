@@ -1,6 +1,7 @@
 ﻿using BolsaEmpleoBusiness.Interfaces;
 using BolsaEmpleoData.Interfaces;
-using BolsaEmpleoModel;
+using BolsaEmpleoModel.DTO;
+using BolsaEmpleoModel.Response;
 using Microsoft.Extensions.Logging;
 
 namespace BolsaEmpleoBusiness

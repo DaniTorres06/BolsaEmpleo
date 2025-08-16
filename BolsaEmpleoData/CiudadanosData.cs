@@ -1,6 +1,6 @@
 ﻿using BolsaEmpleoData.Interfaces;
-using BolsaEmpleoModel;
-using BolsaEmpleoModel.ModelView;
+using BolsaEmpleoModel.DTO;
+using BolsaEmpleoModel.Response;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Data;
@@ -18,7 +18,6 @@ namespace BolsaEmpleoData
         private const string CiudadanosEdit = "sp_Ciudadanos_edit";
         private const string CiudadanosGetId = "sp_Ciudadanos_getId";
         private const string CiudadanosDelete = "sp_Ciudadanos_del";
-
 
         public CiudadanosData(ILogger<CiudadanosData> logger, IConfiguration configuration)
         {

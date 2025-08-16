@@ -1,6 +1,6 @@
 ﻿using BolsaEmpleoBusiness.Interfaces;
-using BolsaEmpleoModel;
-using BolsaEmpleoModel.ModelView;
+using BolsaEmpleoModel.DTO;
+using BolsaEmpleoModel.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BolsaEmpleo.Controllers

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BolsaEmpleoModel.DTO;
 
-namespace BolsaEmpleoModel.ModelView
+namespace BolsaEmpleoModel.Response
 {
     public class RspVacante
     {

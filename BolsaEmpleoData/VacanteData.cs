@@ -1,6 +1,4 @@
-﻿using BolsaEmpleoModel.ModelView;
-using BolsaEmpleoModel;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BolsaEmpleoData.Interfaces;
+using BolsaEmpleoModel.DTO;
+using BolsaEmpleoModel.Response;
 
 namespace BolsaEmpleoData
 {
