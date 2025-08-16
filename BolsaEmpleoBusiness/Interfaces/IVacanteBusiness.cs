@@ -1,5 +1,5 @@
-﻿using BolsaEmpleoModel;
-using BolsaEmpleoModel.ModelView;
+﻿using BolsaEmpleoModel.DTO;
+using BolsaEmpleoModel.Response;
 
 namespace BolsaEmpleoBusiness.Interfaces
 {

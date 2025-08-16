@@ -1,18 +1,14 @@
-﻿using BolsaEmpleoModel.ModelView;
-using System;
+﻿using BolsaEmpleoModel.DTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BolsaEmpleoModel
+namespace BolsaEmpleoModel.Response
 {
     public class RspCiudadano
     {
         public List<Ciudadanos> Ciudadanos { get; set; }
         public Response? Response { get; set; }
 
-        public RspCiudadano() 
+        public RspCiudadano()
         {
             Ciudadanos = new();
             Response = new();

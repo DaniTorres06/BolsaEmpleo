@@ -1,4 +1,5 @@
-﻿using BolsaEmpleoModel;
+﻿using BolsaEmpleoModel.DTO;
+using BolsaEmpleoModel.Response;
 
 namespace BolsaEmpleoData.Interfaces
 {

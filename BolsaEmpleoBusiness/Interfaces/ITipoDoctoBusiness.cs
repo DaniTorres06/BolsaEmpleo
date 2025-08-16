@@ -1,4 +1,4 @@
-﻿using BolsaEmpleoModel;
+﻿using BolsaEmpleoModel.Response;
 
 namespace BolsaEmpleoBusiness.Interfaces
 {

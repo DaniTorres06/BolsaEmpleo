@@ -1,81 +1,71 @@
-﻿using BolsaEmpleoModel.ModelView;
-using BolsaEmpleoModel;
+﻿using BolsaEmpleoData.Interfaces;
+using BolsaEmpleoModel.DTO;
+using BolsaEmpleoModel.Response;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BolsaEmpleoData.Interfaces;
+using System.Data.SqlClient;
 
 namespace BolsaEmpleoData
 {
     public class TipoDoctoData : ITipoDoctoData
     {
-        private readonly ILogger<TipoDoctoData> _logger;
         private readonly IConfiguration _config;
-
         private const string TipoDoctoGet = "sp_TipoDocto_get";
 
-        public TipoDoctoData(ILogger<TipoDoctoData> logger, IConfiguration configuration)
+        public TipoDoctoData(IConfiguration configuration)
         {
-            _logger = logger;
             _config = configuration;
         }
 
         public async Task<RspTipoDocto> TipoDoctoGetAsync()
         {
-            RspTipoDocto vObjRspTipoDocto = new RspTipoDocto();
-            Response vObjRsp = new Response();
+            var rspTypeDocto = new RspTipoDocto();            
 
-            SqlConnection conn = new SqlConnection(_config["ConnectionStrings:SqlServer"]);
             try
             {
-                SqlCommand StoreProc_enc = new SqlCommand(TipoDoctoGet, conn);
-                StoreProc_enc.CommandType = CommandType.StoredProcedure;
+                await using var conn = new SqlConnection(_config["ConnectionStrings:SqlServer"]);
+                await conn.OpenAsync();
 
-                conn.Open();
-                using (SqlDataReader reader = await StoreProc_enc.ExecuteReaderAsync())
+                await using var cmd = new SqlCommand(TipoDoctoGet, conn)
                 {
-                    while (reader.Read())
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    if (reader["HasErrors"] != DBNull.Value && Convert.ToInt32(reader["HasErrors"]) == 0)
                     {
-                        if (Convert.ToInt32(reader["HasErrors"]) == 0)
+                        var tipoDocto = new TipoDocto
                         {
-                            TipoDocto vObjTipoDocto = new();
-                            vObjTipoDocto.IdTipoDocto = reader["Id"] != DBNull.Value ? Convert.ToInt32(reader["Id"].ToString()) : 0;
-                            vObjTipoDocto.TipoDocumneto = reader["TipoDocumento"] != DBNull.Value ? (reader["TipoDocumento"].ToString()) : string.Empty;
+                            IdTipoDocto = reader["Id"] != DBNull.Value ? Convert.ToInt32(reader["Id"]) : 0,
+                            TipoDocumneto = reader["TipoDocumento"]?.ToString() ?? string.Empty
+                        };
 
-                            vObjRsp.Status = true;
-                            vObjRsp.Message = "Registros encontrados";
-
-                            vObjRspTipoDocto.TipoDocto.Add(vObjTipoDocto);
-                            vObjRspTipoDocto.Response = vObjRsp;
-                        }
-                        else
-                        {
-                            vObjRspTipoDocto.Response.Status = false;
-                            vObjRspTipoDocto.Response.Message = "No se encontraron registros";
-                        }
+                        rspTypeDocto.TipoDocto.Add(tipoDocto);
                     }
+                }
+
+                // Si encontró registros
+                if (rspTypeDocto.TipoDocto.Any())
+                {
+                    rspTypeDocto.Response.Status = true;
+                    rspTypeDocto.Response.Message = "Tipo de documentos encontrados";
+                }
+                else
+                {
+                    rspTypeDocto.Response.Status = false;
+                    rspTypeDocto.Response.Message = "No se encontraron registros";
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
-                vObjRspTipoDocto.Response.Status = false;
-                vObjRspTipoDocto.Response.Message = "Problemas al buscar el registro " + ex.Message;
-                return vObjRspTipoDocto;
+                rspTypeDocto.Response.Status = false;
+                rspTypeDocto.Response.Message = $"Error al buscar registros: {ex.Message}";
             }
 
-            finally
-            {
-                conn.Close();
-            }
-
-            return vObjRspTipoDocto;
+            return rspTypeDocto;
         }
+
     }
 }

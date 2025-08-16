@@ -1,8 +1,8 @@
 ﻿using BolsaEmpleoBusiness.Interfaces;
 using BolsaEmpleoData;
 using BolsaEmpleoData.Interfaces;
-using BolsaEmpleoModel;
-using BolsaEmpleoModel.ModelView;
+using BolsaEmpleoModel.DTO;
+using BolsaEmpleoModel.Response;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
